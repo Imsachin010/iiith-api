@@ -11,7 +11,7 @@ This project is a simple API built using FastAPI that provides endpoints for per
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/iiith-api.git
+   git clone https://github.com/Imsachin010/iiith-api.git
    cd iiith-api
    ```
 
@@ -21,10 +21,11 @@ This project is a simple API built using FastAPI that provides endpoints for per
    source venv/bin/activate  # On Windows use `venv\\Scripts\\activate`
    ```
 
-3. Install the required packages:
+3. Install the required packages using the setup file:
    ```bash
    pip install -e .
    ```
+   This command will automatically install all necessary dependencies defined in the `setup.py` file, making it easy to set up the project on any system.
 
 ## Running the Server
 To start the server, run the following command:
