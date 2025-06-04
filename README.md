@@ -83,11 +83,109 @@ Run unit tests using pytest:
 pytest tests/
 ```
 
-### Performance Tests
-Run Locust performance tests:
+### Performance Testing
+
+#### 1. Starting the API Server
+First, ensure your API server is running:
 ```bash
-locust -f locustfile.py
+# Start the FastAPI server
+uvicorn app.main:app --reload
+
+# The server will be available at:
+# http://127.0.0.1:8000
 ```
+
+#### 2. Running Locust Tests
+In a new terminal window:
+```bash
+# Install locust if not already installed
+pip install locust
+
+# Run locust with our test file
+locust -f locustfile.py --host=http://127.0.0.1:8000
+```
+
+#### 3. Configuring and Running Tests in Locust Web Interface
+1. Open your browser and navigate to `http://localhost:8089`
+2. Configure the test parameters:
+   - **Number of users**: Start with 100
+   - **Spawn rate**: Set to 10 users/second
+   - **Run time**: Set to 5 minutes
+3. Click "Start swarming" to begin the test
+4. Monitor real-time statistics:
+   - Response times
+   - Request rates
+   - Failure rates
+   - Number of users
+
+#### 4. Understanding Test Results
+The test will simulate:
+- Multiple concurrent users
+- Different API endpoints
+- Authentication flows
+- Various payload sizes
+
+Key metrics to monitor:
+- **Response Time**: Should be under 200ms for most requests
+- **Requests/sec**: Higher is better
+- **Failure Rate**: Should be close to 0%
+- **User Count**: Should match your configuration
+
+#### 5. Generating Performance Reports
+After the test completes:
+```bash
+# Generate the performance report
+python generate_performance_report.py
+```
+
+The script will create two files:
+1. `performance_report.json`: Contains raw performance data
+   - Response times
+   - Success rates
+   - Error counts
+   - Request counts
+
+2. `performance_report.html`: Visual report with:
+   - Summary statistics
+   - Performance graphs
+   - Endpoint-specific metrics
+   - Recommendations
+
+#### 6. Interpreting the Report
+The performance report includes:
+- **Overall Performance**:
+  - Total requests processed
+  - Average response time
+  - Success rate
+  - Error rate
+
+- **Per-Endpoint Metrics**:
+  - `/add`: Addition operation performance
+  - `/multiply`: Multiplication operation performance
+  - `/check-even-odd`: Even/Odd check performance
+  - `/logs`: Admin endpoint performance
+
+- **Authentication Performance**:
+  - Token generation time
+  - Authentication success rate
+  - Token validation overhead
+
+#### 7. Performance Optimization Tips
+Based on the test results:
+1. If response times are high:
+   - Check database queries
+   - Optimize authentication flow
+   - Review logging overhead
+
+2. If failure rates are high:
+   - Check error handling
+   - Verify authentication
+   - Monitor resource usage
+
+3. If request rates are low:
+   - Optimize code paths
+   - Review database indexes
+   - Check server resources
 
 ## 📝 API Endpoints
 
